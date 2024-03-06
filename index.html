@@ -25,12 +25,40 @@
 			<!-- 画像を水平に表示させる場合は下記の rotation でOK -->
 			<a-image width="3" height="3" position="0.2 0.4 0.4" rotation="-90 0 0" src="img/icon.png" depth="1">
 			</a-image>
-			<a-image id="icon2" width="1" height="1" position="0.2 0.4 0.4" rotation="-90 0 0" src="img/icon2.png"
-				animation="property: rotation; to: 0 360 0; loop: true; dur: 2000;"></a-image>
+			<a-image id="icon2" width="5" height="5" position="0 0 0" rotation="-90 0 0" src="img/icon2.png"></a-image>
 
 
 		</a-marker>
 	</a-scene>
+	<script>
+		// icon2.pngが円の軌道で動くアニメーションを制御するJavaScriptコード
+		// ページが読み込まれた後、アニメーションが開始されます
+		document.addEventListener('DOMContentLoaded', function () {
+			var icon2 = document.getElementById('icon2');
+			var radius = 1.5; // 円の半径
+			var speed = 0.01; // アニメーションの速度
+			var angle = 0; // 初期角度
+
+			// アニメーション関数
+			function animateCircle() {
+				// 円運動の座標を計算
+				var x = Math.cos(angle) * radius;
+				var z = Math.sin(angle) * radius;
+
+				// icon2の位置を更新
+				icon2.setAttribute('position', x + ' 0.4 ' + z);
+
+				// 次のフレームのアニメーションを要求
+				requestAnimationFrame(animateCircle);
+
+				// 角度を更新
+				angle += speed;
+			}
+
+			// アニメーションを開始
+			animateCircle();
+		});
+	</script>
 </body>
 
 </html>
