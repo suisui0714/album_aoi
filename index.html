@@ -30,6 +30,10 @@
 
 
 		</a-marker>
+
+		<!-- AR マーカーが認識されない場合のメッセージ -->
+		<a-entity id="noMarkerMessage" visible="false" position="0 0 -5"
+			text="value: ARマーカーを読み込んでください; align: center; width: 4;"></a-entity>
 	</a-scene>
 	<script>
 		// icon2.pngが円の軌道で動くアニメーションを制御するJavaScriptコード
@@ -58,6 +62,18 @@
 
 			// アニメーションを開始
 			animateCircle();
+		});
+
+		// AR マーカーが読み込まれない場合の処理
+		document.querySelector('a-marker').addEventListener('markerNotFound', function () {
+			var noMarkerMessage = document.getElementById('noMarkerMessage');
+			noMarkerMessage.setAttribute('visible', true);
+		});
+
+		// AR マーカーが再度読み込まれた場合の処理
+		document.querySelector('a-marker').addEventListener('markerFound', function () {
+			var noMarkerMessage = document.getElementById('noMarkerMessage');
+			noMarkerMessage.setAttribute('visible', false);
 		});
 	</script>
 </body>
