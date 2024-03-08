@@ -11,7 +11,11 @@
 	<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
 </head>
 
-<body style="margin : 0px; overflow: hidden;">
+<body style="margin: 0px; overflow: hidden;">
+	<div id="loadingMessage"
+		style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 10px; font-size: 24px;">
+		ARマーカーを読み込んでね
+	</div>
 	<a-scene embedded arjs="debugUIEnabled:false;">
 		<a-entity camera></a-entity>
 
@@ -30,10 +34,6 @@
 
 
 		</a-marker>
-
-		<!-- AR マーカーが読み込まれていない場合のメッセージ -->
-		<a-entity id="noMarkerMessage" visible="false" position="0 2 -5"
-			text="value: ARマーカーが読み込まれていません; align: center; width: 4;"></a-entity>
 	</a-scene>
 	<script>
 		// icon2.pngが円の軌道で動くアニメーションを制御するJavaScriptコード
@@ -62,18 +62,12 @@
 
 			// アニメーションを開始
 			animateCircle();
-		});
 
-		// AR マーカーが読み込まれない場合の処理
-		document.querySelector('a-marker').addEventListener('markerNotFound', function () {
-			var noMarkerMessage = document.getElementById('noMarkerMessage');
-			noMarkerMessage.setAttribute('visible', true);
-		});
-
-		// AR マーカーが再度読み込まれた場合の処理
-		document.querySelector('a-marker').addEventListener('markerFound', function () {
-			var noMarkerMessage = document.getElementById('noMarkerMessage');
-			noMarkerMessage.setAttribute('visible', false);
+			// ARマーカーが読み込まれたらローディングメッセージを非表示にする
+			document.querySelector('a-marker').addEventListener('markerFound', function () {
+				var loadingMessage = document.getElementById('loadingMessage');
+				loadingMessage.style.display = 'none';
+			});
 		});
 	</script>
 </body>
